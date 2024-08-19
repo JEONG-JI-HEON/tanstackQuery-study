@@ -1,6 +1,6 @@
 # Dev
 
-- OOO 프로젝트
+- Tanstack Query Study
 
 ## Package manager
 
