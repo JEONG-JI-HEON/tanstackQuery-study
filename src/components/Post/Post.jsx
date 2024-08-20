@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Post = () => {
-  return <></>;
+  return <div></div>;
 };
 
 export default Post;
