@@ -21,22 +21,21 @@ const Posts = ({ setPostId }) => {
         title = (
           <div>
             {data.map((post) => (
-              <p key={post.id}>
-                <a
-                  onClick={() => setPostId(post.id)}
-                  href="#"
+              <div key={post.id} onClick={() => setPostId(post.id)}>
+                <p
                   style={
                     queryClient.getQueryData(["post", post.id])
                       ? {
                           fontWeight: "bold",
                           color: "green",
+                          cursor: "pointer",
                         }
-                      : {}
+                      : { cursor: "pointer" }
                   }
                 >
                   {post.title}
-                </a>
-              </p>
+                </p>
+              </div>
             ))}
           </div>
         );
