@@ -1,0 +1,17 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  padding: 30px;
+  box-sizing: border-box;
+
+  .list-header {
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  .list-cover {
+  }
+}
