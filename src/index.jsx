@@ -4,9 +4,6 @@ import { RecoilRoot } from "recoil";
 import "./assets/css/index.css";
 import App from "./routes/App";
 
-
-// worker.start();
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <RecoilRoot>
     <App />
