@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePosts } from "../../hook/usePosts";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { Avatar, List } from "antd";
+import { Avatar, List, Skeleton } from "antd";
 
 const Posts = ({ setPostId }) => {
   const queryClient = useQueryClient();
@@ -14,31 +14,31 @@ const Posts = ({ setPostId }) => {
     let title;
     switch (status) {
       case "pending":
-        title = "loading...";
+        title = (
+          <>
+            <Skeleton active avatar>
+              <List.Item.Meta />
+            </Skeleton>
+            <Skeleton active avatar>
+              <List.Item.Meta />
+            </Skeleton>
+            <Skeleton active avatar>
+              <List.Item.Meta />
+            </Skeleton>
+            <Skeleton active avatar>
+              <List.Item.Meta />
+            </Skeleton>
+            <Skeleton active avatar>
+              <List.Item.Meta />
+            </Skeleton>
+          </>
+        );
         break;
       case "error":
         title = <span>Error: {error.message}</span>;
         break;
       case "success":
         title = (
-          // <div>
-          //   {data.map((post) => (
-          //     <div key={post.id} className="cursor-pointer mb-3" onClick={() => setPostId(post.id)}>
-          //       <p
-          //         style={
-          //           queryClient.getQueryData(["post", post.id])
-          //             ? {
-          //                 fontWeight: "bold",
-          //                 color: "red",
-          //               }
-          //             : {}
-          //         }
-          //       >
-          //         {post.title}
-          //       </p>
-          //     </div>
-          //   ))}
-          // </div>
           <>
             <List
               itemLayout="horizontal"
