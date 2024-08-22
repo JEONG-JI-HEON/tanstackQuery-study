@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { usePost } from "../../hook/usePost";
+import { HomeOutlined } from "@ant-design/icons";
+import { Card, ConfigProvider } from "antd";
 
 const Post = ({ postId, setPostId }) => {
   const { status, data, error, isFetching } = usePost(postId);
@@ -14,26 +16,38 @@ const Post = ({ postId, setPostId }) => {
       break;
     case "success":
       mainContent = (
-        <>
-          <h1 className="font-bold text-4xl pb-10">{data.title}</h1>
+        <div className="h-full">
+          <ConfigProvider
+            theme={{
+              components: {
+                Card: {
+                  headerFontSize: 36,
+                  headerHeight: 80,
+                },
+              },
+            }}
+          >
+            <Card
+              title={data.title}
+              className="border-4 text-2xl h-full"
+              extra={<HomeOutlined className="text-2xl text-emerald-400" onClick={() => setPostId(-1)} />}
+            >
+              <p>{data.body}</p>
+            </Card>
+          </ConfigProvider>
+
+          {/* <h1 className="font-bold text-4xl pb-10">{data.title}</h1>
           <div>
             <p>{data.body}</p>
-          </div>
-        </>
+          </div> */}
+        </div>
       );
       break;
     default:
       break;
   }
 
-  return (
-    <div>
-      <div className="cursor-pointer" onClick={() => setPostId(-1)}>
-        뒤로가기
-      </div>
-      {mainContent}
-    </div>
-  );
+  return <div className="h-full">{mainContent}</div>;
 };
 
 export default Post;
