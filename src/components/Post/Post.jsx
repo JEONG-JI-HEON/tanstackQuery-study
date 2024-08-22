@@ -15,7 +15,7 @@ const Post = ({ postId, setPostId }) => {
     case "success":
       mainContent = (
         <>
-          <h1>{data.title}</h1>
+          <h1 className="font-bold text-4xl pb-10">{data.title}</h1>
           <div>
             <p>{data.body}</p>
           </div>
