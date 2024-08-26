@@ -16,42 +16,6 @@ const Post = ({ postId, setPostId }) => {
     return () => clearTimeout(timer);
   }, [status]);
 
-  // let mainContent;
-  // switch (status) {
-  //   case "pending":
-  //     mainContent = "로딩중....";
-  //     break;
-  //   case "error":
-  //     mainContent = `에러 코드 ${error}`;
-  //     break;
-  //   case "success":
-  //     mainContent = (
-  //       <div className="h-full">
-  //         <ConfigProvider
-  //           theme={{
-  //             components: {
-  //               Card: {
-  //                 headerFontSize: 36,
-  //                 headerHeight: 80,
-  //               },
-  //             },
-  //           }}
-  //         >
-  //           <Card
-  //             title={data.title}
-  //             className="border-4 text-2xl h-full"
-  //             extra={<HomeOutlined className="text-2xl text-emerald-400" onClick={() => setPostId(-1)} />}
-  //           >
-  //             <p>{data.body}</p>
-  //           </Card>
-  //         </ConfigProvider>
-  //       </div>
-  //     );
-  //     break;
-  //   default:
-  //     break;
-  // }
-
   const renderContent = () => {
     switch (delayedStatus) {
       case "pending":
