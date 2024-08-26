@@ -10,13 +10,9 @@ const Post = ({ postId, setPostId }) => {
 
   useEffect(() => {
     let timer;
-    if (status === "success") {
-      timer = setTimeout(() => {
-        setDelayedStatus("success");
-      }, 500);
-    } else {
+    timer = setTimeout(() => {
       setDelayedStatus(status);
-    }
+    }, 500);
     return () => clearTimeout(timer);
   }, [status]);
 
