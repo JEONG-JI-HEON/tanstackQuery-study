@@ -9,7 +9,6 @@ const Posts = ({ setPostId }) => {
   const { status, data, error, isFetching } = usePosts();
 
   const [delayedStatus, setDelayedStatus] = useState("pending");
-
   useEffect(() => {
     let timer;
     timer = setTimeout(() => {
