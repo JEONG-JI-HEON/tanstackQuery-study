@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { usePost } from "../../hook/usePost";
 import { HomeOutlined } from "@ant-design/icons";
-import { Card, ConfigProvider, Skeleton } from "antd";
+import { Card, ConfigProvider, Pagination, Skeleton } from "antd";
 
 const Post = ({ postId, setPostId }) => {
   const { status, data, error, isFetching } = usePost(postId);
