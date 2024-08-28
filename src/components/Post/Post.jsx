@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import styles from "./post.module.scss";
+
 import { HomeOutlined } from "@ant-design/icons";
 import { Card, ConfigProvider, List, Skeleton } from "antd";
 import { usePost } from "../../hook/usePost";
@@ -28,7 +30,6 @@ const Post = ({ postId, setPostId }) => {
   }, [status]);
 
   useEffect(() => {
-    console.log(postId);
     setDelayedStatus(status);
   }, [postId]);
 
@@ -41,11 +42,16 @@ const Post = ({ postId, setPostId }) => {
   const renderAnotherContent = () => {
     return (
       <List
+        className={styles["list-cover"]}
         itemLayout="horizontal"
         dataSource={anotherData}
         renderItem={(item, index) => (
           <List.Item onClick={() => onClickEvent(item)}>
-            <List.Item.Meta title={<p>{item.dtitle}</p>} description={item.body ? item.body : "글이 없습니다."} />
+            <List.Item.Meta
+              title={<p>{item.dtitle}</p>}
+              description={item.body ? item.body : "글이 없습니다."}
+              style={item.body ? { cursor: "pointer" } : {}}
+            />
           </List.Item>
         )}
       />
