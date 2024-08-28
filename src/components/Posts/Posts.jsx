@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { usePosts } from "../../hook/usePosts";
 import { useQueryClient } from "@tanstack/react-query";
-import { Avatar, List, Skeleton } from "antd";
+import { Avatar, List, Pagination, Skeleton } from "antd";
 import SkeletonNode from "antd/es/skeleton/Node";
 
 const Posts = ({ setPostId }) => {
@@ -9,16 +9,11 @@ const Posts = ({ setPostId }) => {
   const { status, data, error, isFetching } = usePosts();
 
   const [delayedStatus, setDelayedStatus] = useState("pending");
-
   useEffect(() => {
     let timer;
-    if (status === "success") {
-      timer = setTimeout(() => {
-        setDelayedStatus("success");
-      }, 500);
-    } else {
+    timer = setTimeout(() => {
       setDelayedStatus(status);
-    }
+    }, 500);
     return () => clearTimeout(timer);
   }, [status]);
 
@@ -46,32 +41,41 @@ const Posts = ({ setPostId }) => {
         return <span>Error: {error.message}</span>;
       case "success":
         return (
-          <List
-            itemLayout="horizontal"
-            dataSource={data}
-            renderItem={(item, index) => (
-              <List.Item className="cursor-pointer" onClick={() => setPostId(item.id)}>
-                <List.Item.Meta
-                  avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
-                  title={
-                    <p
-                      style={
-                        queryClient.getQueryData(["post", item.id])
-                          ? {
-                              fontWeight: "bold",
-                              color: "red",
-                            }
-                          : {}
-                      }
-                    >
-                      {item.title}
-                    </p>
-                  }
-                  description={item.body}
-                />
-              </List.Item>
-            )}
-          />
+          <>
+            <List
+              itemLayout="horizontal"
+              dataSource={data}
+              pagination={{
+                onChange: (page, pageSize) => {},
+                align: "center",
+                pageSize: 10,
+                total: data.length,
+                showSizeChanger: false,
+              }}
+              renderItem={(item, index) => (
+                <List.Item className="cursor-pointer" onClick={() => setPostId(item.id)}>
+                  <List.Item.Meta
+                    avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
+                    title={
+                      <p
+                        style={
+                          queryClient.getQueryData(["post", item.id])
+                            ? {
+                                fontWeight: "bold",
+                                color: "red",
+                              }
+                            : {}
+                        }
+                      >
+                        {item.title}
+                      </p>
+                    }
+                    description={item.body}
+                  />
+                </List.Item>
+              )}
+            />
+          </>
         );
       default:
         return null;

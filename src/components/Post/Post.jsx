@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { usePost } from "../../hook/usePost";
+
+import styles from "./post.module.scss";
+
 import { HomeOutlined } from "@ant-design/icons";
-import { Card, ConfigProvider, Skeleton } from "antd";
+import { Card, ConfigProvider, List, Skeleton } from "antd";
+import { usePost } from "../../hook/usePost";
+import { usePosts } from "../../hook/usePosts";
 
 const Post = ({ postId, setPostId }) => {
   const { status, data, error, isFetching } = usePost(postId);
+  const allDatas = usePosts(postId).data;
 
   const [delayedStatus, setDelayedStatus] = useState("pending");
+
+  const prevData = allDatas?.find((allData) => allData?.id === data?.id - 1);
+  const nextData = allDatas?.find((allData) => allData?.id === data?.id + 1);
+
+  const anotherData = [
+    { ...prevData, dtitle: "이전글" },
+    { ...nextData, dtitle: "다음글" },
+  ];
 
   useEffect(() => {
     let timer;
@@ -15,6 +28,35 @@ const Post = ({ postId, setPostId }) => {
     }, 500);
     return () => clearTimeout(timer);
   }, [status]);
+
+  useEffect(() => {
+    setDelayedStatus(status);
+  }, [postId]);
+
+  const onClickEvent = (item) => {
+    if (!item || !item.id) return;
+    setPostId(item.id);
+    setDelayedStatus("pending");
+  };
+
+  const renderAnotherContent = () => {
+    return (
+      <List
+        className={styles["list-cover"]}
+        itemLayout="horizontal"
+        dataSource={anotherData}
+        renderItem={(item, index) => (
+          <List.Item onClick={() => onClickEvent(item)}>
+            <List.Item.Meta
+              title={<p>{item.dtitle}</p>}
+              description={item.body ? item.body : "글이 없습니다."}
+              style={item.body ? { cursor: "pointer" } : {}}
+            />
+          </List.Item>
+        )}
+      />
+    );
+  };
 
   const renderContent = () => {
     switch (delayedStatus) {
@@ -50,6 +92,7 @@ const Post = ({ postId, setPostId }) => {
                 extra={<HomeOutlined className="text-2xl text-emerald-400" onClick={() => setPostId(-1)} />}
               >
                 <p>{data.body}</p>
+                {renderAnotherContent()}
               </Card>
             </ConfigProvider>
           </div>
